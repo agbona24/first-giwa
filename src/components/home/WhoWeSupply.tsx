@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useState, useRef } from "react";
 import Container from "@/components/layout/Container";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -16,6 +17,8 @@ const audiences = [
     ),
     title: "Poultry Farms",
     desc: "Broiler & layer operations",
+    gradient: "from-amber-400 to-orange-500",
+    bgGlow: "rgba(251, 191, 36, 0.3)",
   },
   {
     icon: (
@@ -25,6 +28,8 @@ const audiences = [
     ),
     title: "Fish Farms",
     desc: "Catfish & tilapia producers",
+    gradient: "from-cyan-400 to-blue-500",
+    bgGlow: "rgba(34, 211, 238, 0.3)",
   },
   {
     icon: (
@@ -34,6 +39,8 @@ const audiences = [
     ),
     title: "Feed Distributors",
     desc: "Bulk & wholesale supply",
+    gradient: "from-emerald-400 to-green-500",
+    bgGlow: "rgba(52, 211, 153, 0.3)",
   },
   {
     icon: (
@@ -43,13 +50,211 @@ const audiences = [
     ),
     title: "Agro Retailers",
     desc: "Feed & agro-allied shops",
+    gradient: "from-violet-400 to-purple-500",
+    bgGlow: "rgba(167, 139, 250, 0.3)",
   },
 ];
 
-export default function WhoWeSupply() {
+function PremiumCard({ 
+  item, 
+  index, 
+  isActive, 
+  onHover 
+}: { 
+  item: typeof audiences[0]; 
+  index: number;
+  isActive: boolean;
+  onHover: (index: number | null) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), { stiffness: 300, damping: 30 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), { stiffness: 300, damping: 30 });
+
+  const handleMouse = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
   return (
-    <Section background="primary" className="py-16 md:py-20">
-      <Container>
+    <motion.div
+      ref={ref}
+      variants={fadeUpVariants}
+      className="relative group"
+      onMouseMove={handleMouse}
+      onMouseEnter={() => onHover(index)}
+      onMouseLeave={() => {
+        mouseX.set(0);
+        mouseY.set(0);
+        onHover(null);
+      }}
+      style={{ 
+        rotateX, 
+        rotateY, 
+        transformStyle: "preserve-3d",
+        perspective: "1000px",
+      }}
+    >
+      {/* Glow effect */}
+      <motion.div
+        className="absolute inset-0 rounded-3xl blur-2xl -z-10"
+        style={{ backgroundColor: item.bgGlow }}
+        animate={{
+          opacity: isActive ? 0.6 : 0,
+          scale: isActive ? 1.1 : 0.9,
+        }}
+        transition={{ duration: 0.4 }}
+      />
+
+      {/* Card */}
+      <motion.div
+        className="relative h-full backdrop-blur-xl bg-white/10 rounded-3xl p-8 border border-white/20 overflow-hidden"
+        animate={{
+          y: isActive ? -8 : 0,
+          boxShadow: isActive 
+            ? "0 25px 50px -12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)" 
+            : "0 10px 40px -10px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)",
+        }}
+        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+      >
+        {/* Glass reflection */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent rounded-3xl" />
+        
+        {/* Animated border gradient */}
+        <motion.div
+          className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background: `linear-gradient(135deg, ${item.bgGlow}, transparent, ${item.bgGlow})`,
+            padding: "1px",
+          }}
+        />
+
+        {/* Shimmer effect */}
+        <motion.div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100"
+          style={{
+            background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%)",
+          }}
+          animate={{
+            x: isActive ? ["-150%", "150%"] : "-150%",
+          }}
+          transition={{
+            duration: 1,
+            repeat: isActive ? Infinity : 0,
+            repeatDelay: 3,
+            ease: "easeInOut",
+          }}
+        />
+
+        <div className="relative z-10 flex flex-col items-center text-center">
+          {/* Icon container with gradient background */}
+          <motion.div
+            className={`relative w-20 h-20 rounded-2xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white mb-5 shadow-lg`}
+            animate={{
+              rotate: isActive ? 5 : 0,
+              scale: isActive ? 1.1 : 1,
+            }}
+            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            style={{ transform: "translateZ(30px)" }}
+          >
+            {/* Pulsing ring */}
+            <motion.div
+              className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.gradient}`}
+              animate={{
+                scale: isActive ? [1, 1.3, 1] : 1,
+                opacity: isActive ? [0.5, 0, 0.5] : 0,
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            
+            {/* Icon */}
+            <motion.div
+              animate={{ scale: isActive ? 1.1 : 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {item.icon}
+            </motion.div>
+          </motion.div>
+
+          {/* Title */}
+          <motion.h3 
+            className="text-white font-bold font-heading text-lg md:text-xl mb-2"
+            style={{ transform: "translateZ(20px)" }}
+            animate={{ scale: isActive ? 1.05 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            {item.title}
+          </motion.h3>
+
+          {/* Description */}
+          <p className="text-white/70 text-sm md:text-base" style={{ transform: "translateZ(15px)" }}>
+            {item.desc}
+          </p>
+
+          {/* Decorative line */}
+          <motion.div
+            className={`h-0.5 bg-gradient-to-r ${item.gradient} mt-4 rounded-full`}
+            initial={{ width: 0 }}
+            animate={{ width: isActive ? "60%" : "30%" }}
+            transition={{ duration: 0.4 }}
+          />
+        </div>
+
+        {/* Corner decorations */}
+        <div className="absolute top-0 right-0 w-24 h-24 opacity-10">
+          <svg viewBox="0 0 100 100" fill="none">
+            <circle cx="100" cy="0" r="80" stroke="white" strokeWidth="0.5" />
+            <circle cx="100" cy="0" r="60" stroke="white" strokeWidth="0.5" />
+            <circle cx="100" cy="0" r="40" stroke="white" strokeWidth="0.5" />
+          </svg>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export default function WhoWeSupply() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  return (
+    <Section background="primary" className="py-20 md:py-28 overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0">
+        {/* Floating orbs */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white/5 blur-3xl"
+          animate={{
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-secondary/10 blur-3xl"
+          animate={{
+            x: [0, -40, 0],
+            y: [0, 40, 0],
+            scale: [1.2, 1, 1.2],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)`,
+          backgroundSize: "50px 50px",
+        }} />
+
+        {/* Radial gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/50 to-primary" />
+      </div>
+
+      <Container className="relative z-10">
         <SectionHeading
           eyebrow="Our Clients"
           heading="Who We Supply"
@@ -57,25 +262,15 @@ export default function WhoWeSupply() {
           light
         />
 
-        <StaggerChildren className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {audiences.map((item) => (
-            <motion.div
+        <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {audiences.map((item, index) => (
+            <PremiumCard
               key={item.title}
-              variants={fadeUpVariants}
-              className="flex flex-col items-center text-center"
-            >
-              <motion.div
-                className="text-white/90 mb-3"
-                whileHover={{ rotate: 5, scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {item.icon}
-              </motion.div>
-              <h3 className="text-white font-semibold font-heading text-sm md:text-base mb-1">
-                {item.title}
-              </h3>
-              <p className="text-white/60 text-xs md:text-sm">{item.desc}</p>
-            </motion.div>
+              item={item}
+              index={index}
+              isActive={activeIndex === index}
+              onHover={setActiveIndex}
+            />
           ))}
         </StaggerChildren>
       </Container>

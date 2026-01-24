@@ -1,119 +1,168 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
-
-// Floating feed pellet particles
-const particles = [
-  { x: "10%", y: "20%", size: 6, delay: 0, duration: 6 },
-  { x: "85%", y: "15%", size: 8, delay: 1, duration: 7 },
-  { x: "75%", y: "75%", size: 5, delay: 0.5, duration: 5.5 },
-  { x: "20%", y: "80%", size: 7, delay: 1.5, duration: 6.5 },
-  { x: "50%", y: "10%", size: 4, delay: 2, duration: 5 },
-  { x: "30%", y: "60%", size: 5, delay: 0.8, duration: 7.5 },
-  { x: "90%", y: "45%", size: 6, delay: 1.2, duration: 6 },
-  { x: "5%", y: "45%", size: 4, delay: 2.5, duration: 5.5 },
-];
+import Product3D from "./Product3D";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center bg-primary overflow-hidden">
-      {/* === BACKGROUND ANIMATED VECTORS === */}
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* === RICH GRADIENT BACKGROUND === */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `
+            radial-gradient(ellipse 80% 60% at 20% 50%, #1a5c2a 0%, transparent 60%),
+            radial-gradient(ellipse 60% 80% at 80% 20%, #235a35 0%, transparent 50%),
+            radial-gradient(ellipse 70% 60% at 70% 80%, #143d1e 0%, transparent 50%),
+            linear-gradient(160deg, #0f3318 0%, #1a5428 30%, #1F5E2E 50%, #174a24 75%, #0d2c15 100%)
+          `,
+        }}
+      />
 
-      {/* Large pulsing circles */}
+      {/* === ANIMATED AURORA BLOBS === */}
       <motion.div
-        className="absolute top-[10%] right-[10%] w-[400px] h-[400px] rounded-full border border-white/5 hidden lg:block"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-[100px]"
+        style={{ background: "radial-gradient(circle, #3E8E41 0%, transparent 70%)", top: "-10%", left: "-5%" }}
+        animate={{
+          x: [0, 80, 30, 0],
+          y: [0, 40, -20, 0],
+          scale: [1, 1.2, 0.9, 1],
+        }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute top-[10%] right-[10%] w-[400px] h-[400px] rounded-full border border-white/5 hidden lg:block"
-        animate={{ scale: [1.1, 1.3, 1.1], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute w-[500px] h-[500px] rounded-full opacity-15 blur-[80px]"
+        style={{ background: "radial-gradient(circle, #4FA854 0%, transparent 70%)", top: "20%", right: "-10%" }}
+        animate={{
+          x: [0, -60, -20, 0],
+          y: [0, 60, -30, 0],
+          scale: [1, 0.85, 1.15, 1],
+        }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-[450px] h-[450px] rounded-full opacity-10 blur-[90px]"
+        style={{ background: "radial-gradient(circle, #8B6F3D 0%, transparent 70%)", bottom: "0%", left: "30%" }}
+        animate={{
+          x: [0, 50, -30, 0],
+          y: [0, -50, 20, 0],
+          scale: [1, 1.1, 0.95, 1],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+      />
+      <motion.div
+        className="absolute w-[350px] h-[350px] rounded-full opacity-12 blur-[70px] hidden lg:block"
+        style={{ background: "radial-gradient(circle, #2a7a3b 0%, transparent 70%)", top: "50%", left: "50%" }}
+        animate={{
+          x: [0, -40, 60, 0],
+          y: [0, 30, -40, 0],
+        }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 5 }}
       />
 
-      {/* Animated hexagon (nutrition/science motif) */}
+      {/* === ANIMATED MESH GRID === */}
       <motion.svg
-        className="absolute top-[15%] left-[8%] w-16 h-16 hidden md:block"
-        viewBox="0 0 64 64"
-        fill="none"
-        initial={{ opacity: 0, rotate: -30 }}
-        animate={{ opacity: 0.15, rotate: 30 }}
-        transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+        className="absolute inset-0 w-full h-full opacity-[0.04]"
+        xmlns="http://www.w3.org/2000/svg"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.04 }}
+        transition={{ duration: 2 }}
       >
-        <path d="M32 4L56 18V46L32 60L8 46V18L32 4Z" stroke="white" strokeWidth="1.5" />
+        <defs>
+          <pattern id="hero-grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#hero-grid)" />
       </motion.svg>
 
-      <motion.svg
-        className="absolute bottom-[20%] left-[15%] w-12 h-12 hidden md:block"
-        viewBox="0 0 64 64"
-        fill="none"
-        animate={{ opacity: [0.08, 0.2, 0.08], rotate: [0, 60, 0], scale: [1, 1.1, 1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      {/* === ANIMATED DIAGONAL LIGHT RAYS === */}
+      <motion.div
+        className="absolute inset-0 overflow-hidden hidden md:block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1 }}
       >
-        <path d="M32 4L56 18V46L32 60L8 46V18L32 4Z" stroke="white" strokeWidth="1" />
-      </motion.svg>
+        <motion.div
+          className="absolute top-0 -left-[20%] w-[40%] h-[200%] -rotate-[25deg] origin-top-left"
+          style={{ background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%)" }}
+          animate={{ x: ["0%", "250%"] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 2 }}
+        />
+        <motion.div
+          className="absolute top-0 -left-[10%] w-[20%] h-[200%] -rotate-[25deg] origin-top-left"
+          style={{ background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.015) 50%, transparent 100%)" }}
+          animate={{ x: ["0%", "300%"] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 6 }}
+        />
+      </motion.div>
 
-      {/* Animated wheat/grain SVG */}
+      {/* === TOPOGRAPHIC CONTOUR LINES === */}
       <motion.svg
-        className="absolute top-[30%] left-[3%] w-20 h-20 opacity-10 hidden lg:block"
-        viewBox="0 0 80 80"
+        className="absolute bottom-0 left-0 w-full h-[60%] opacity-[0.035] hidden md:block"
+        viewBox="0 0 1200 600"
         fill="none"
-        animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <path d="M40 75V20" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-        <ellipse cx="40" cy="18" rx="6" ry="10" stroke="white" strokeWidth="1.2" />
-        <ellipse cx="33" cy="28" rx="5" ry="8" stroke="white" strokeWidth="1.2" transform="rotate(-20 33 28)" />
-        <ellipse cx="47" cy="28" rx="5" ry="8" stroke="white" strokeWidth="1.2" transform="rotate(20 47 28)" />
-        <ellipse cx="30" cy="40" rx="4" ry="7" stroke="white" strokeWidth="1.2" transform="rotate(-25 30 40)" />
-        <ellipse cx="50" cy="40" rx="4" ry="7" stroke="white" strokeWidth="1.2" transform="rotate(25 50 40)" />
-      </motion.svg>
-
-      {/* Animated flowing curves */}
-      <motion.svg
-        className="absolute bottom-[10%] right-[5%] w-48 h-48 hidden lg:block"
-        viewBox="0 0 200 200"
-        fill="none"
-        initial={{ opacity: 0, pathLength: 0 }}
-        animate={{ opacity: 0.12 }}
-        transition={{ duration: 1, delay: 0.5 }}
+        preserveAspectRatio="xMidYMax slice"
       >
         <motion.path
-          d="M20 180 C60 140, 80 60, 120 80 S180 140, 180 20"
-          stroke="white"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: [0, 1, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          d="M0 400 Q200 350, 400 380 T800 360 T1200 400"
+          stroke="white" strokeWidth="1"
+          animate={{ d: ["M0 400 Q200 350, 400 380 T800 360 T1200 400", "M0 400 Q200 420, 400 370 T800 390 T1200 400"] }}
+          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
         />
         <motion.path
-          d="M40 180 C80 120, 100 80, 140 100 S180 160, 160 40"
-          stroke="white"
-          strokeWidth="1"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: [0, 1, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          d="M0 440 Q300 400, 500 430 T900 410 T1200 440"
+          stroke="white" strokeWidth="0.8"
+          animate={{ d: ["M0 440 Q300 400, 500 430 T900 410 T1200 440", "M0 440 Q300 460, 500 420 T900 445 T1200 440"] }}
+          transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 1 }}
+        />
+        <motion.path
+          d="M0 480 Q250 450, 450 470 T850 460 T1200 480"
+          stroke="white" strokeWidth="0.6"
+          animate={{ d: ["M0 480 Q250 450, 450 470 T850 460 T1200 480", "M0 480 Q250 500, 450 465 T850 490 T1200 480"] }}
+          transition={{ duration: 9, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 2 }}
+        />
+        <motion.path
+          d="M0 520 Q200 500, 400 515 T800 505 T1200 520"
+          stroke="white" strokeWidth="0.5"
+          animate={{ d: ["M0 520 Q200 500, 400 515 T800 505 T1200 520", "M0 520 Q200 535, 400 510 T800 530 T1200 520"] }}
+          transition={{ duration: 11, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 3 }}
+        />
+        <motion.path
+          d="M0 560 Q300 540, 600 555 T1000 545 T1200 560"
+          stroke="white" strokeWidth="0.4"
+          animate={{ d: ["M0 560 Q300 540, 600 555 T1000 545 T1200 560", "M0 560 Q300 570, 600 550 T1000 565 T1200 560"] }}
+          transition={{ duration: 12, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 4 }}
         />
       </motion.svg>
 
-      {/* Floating feed pellet particles */}
-      {particles.map((p, i) => (
+      {/* === FLOATING PARTICLES === */}
+      {[
+        { x: "8%", y: "18%", size: 5, delay: 0, dur: 7 },
+        { x: "88%", y: "12%", size: 7, delay: 1, dur: 8 },
+        { x: "72%", y: "78%", size: 4, delay: 0.5, dur: 6 },
+        { x: "18%", y: "75%", size: 6, delay: 1.5, dur: 7.5 },
+        { x: "45%", y: "8%", size: 3, delay: 2, dur: 5.5 },
+        { x: "92%", y: "55%", size: 5, delay: 0.8, dur: 8.5 },
+        { x: "35%", y: "65%", size: 4, delay: 1.2, dur: 6.5 },
+        { x: "5%", y: "50%", size: 3, delay: 2.5, dur: 6 },
+        { x: "60%", y: "25%", size: 6, delay: 3, dur: 7 },
+        { x: "78%", y: "42%", size: 4, delay: 0.3, dur: 9 },
+      ].map((p, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full bg-white/20 hidden md:block"
+          className="absolute rounded-full bg-white hidden md:block"
           style={{ left: p.x, top: p.y, width: p.size, height: p.size }}
           animate={{
-            y: [0, -30, 0],
-            x: [0, i % 2 === 0 ? 15 : -15, 0],
-            opacity: [0.15, 0.4, 0.15],
+            y: [0, -25, 0],
+            x: [0, i % 2 === 0 ? 12 : -12, 0],
+            opacity: [0.08, 0.25, 0.08],
+            scale: [1, 1.3, 1],
           }}
           transition={{
-            duration: p.duration,
+            duration: p.dur,
             repeat: Infinity,
             ease: "easeInOut",
             delay: p.delay,
@@ -121,43 +170,37 @@ export default function HeroSection() {
         />
       ))}
 
-      {/* Diagonal animated lines */}
+      {/* === ANIMATED HEXAGONS === */}
       <motion.svg
-        className="absolute top-0 right-[30%] w-[2px] h-[200px] hidden lg:block"
-        viewBox="0 0 2 200"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.08 }}
-        transition={{ delay: 1 }}
+        className="absolute top-[12%] left-[6%] w-20 h-20 hidden lg:block"
+        viewBox="0 0 80 80"
+        fill="none"
+        animate={{ opacity: [0.06, 0.14, 0.06], rotate: [0, 90, 0], scale: [1, 1.1, 1] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       >
-        <motion.line
-          x1="1" y1="0" x2="1" y2="200"
-          stroke="white"
-          strokeWidth="1.5"
-          strokeDasharray="6 10"
-          animate={{ strokeDashoffset: [0, -32] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-        />
+        <path d="M40 5L70 22.5V57.5L40 75L10 57.5V22.5L40 5Z" stroke="white" strokeWidth="1" />
+        <path d="M40 18L58 28.5V49.5L40 60L22 49.5V28.5L40 18Z" stroke="white" strokeWidth="0.5" />
       </motion.svg>
 
       <motion.svg
-        className="absolute bottom-0 left-[40%] w-[2px] h-[150px] hidden lg:block"
-        viewBox="0 0 2 150"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.06 }}
-        transition={{ delay: 1.5 }}
+        className="absolute bottom-[25%] left-[12%] w-14 h-14 hidden lg:block"
+        viewBox="0 0 64 64"
+        fill="none"
+        animate={{ opacity: [0.05, 0.12, 0.05], rotate: [-20, 40, -20] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
       >
-        <motion.line
-          x1="1" y1="0" x2="1" y2="150"
-          stroke="white"
-          strokeWidth="1.5"
-          strokeDasharray="4 8"
-          animate={{ strokeDashoffset: [0, 24] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-        />
+        <path d="M32 4L56 18V46L32 60L8 46V18L32 4Z" stroke="white" strokeWidth="0.8" />
       </motion.svg>
+
+      {/* === WAVE BOTTOM DIVIDER === */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full" preserveAspectRatio="none">
+          <path d="M0 40C240 70 480 10 720 40C960 70 1200 10 1440 40V80H0V40Z" fill="#F7F6F2" />
+        </svg>
+      </div>
 
       {/* === MAIN CONTENT === */}
-      <Container className="relative z-10 pt-24 pb-16 md:pt-28 md:pb-20">
+      <Container className="relative z-10 pt-28 pb-24 md:pt-32 md:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left: Text content */}
           <div>
@@ -204,132 +247,8 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right: Product image with rich animations */}
-          <motion.div
-            className="relative flex items-center justify-center min-h-[400px] md:min-h-[500px]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            {/* Orbiting particles around product */}
-            <motion.div
-              className="absolute inset-0 m-auto w-[85%] h-[85%] hidden md:block"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="absolute top-0 left-1/2 w-3 h-3 -translate-x-1/2 rounded-full bg-white/30" />
-              <div className="absolute bottom-0 left-1/2 w-2 h-2 -translate-x-1/2 rounded-full bg-white/20" />
-              <div className="absolute top-1/2 left-0 w-2.5 h-2.5 -translate-y-1/2 rounded-full bg-secondary/40" />
-            </motion.div>
-
-            {/* Counter-rotating orbit */}
-            <motion.div
-              className="absolute inset-0 m-auto w-[70%] h-[70%] hidden md:block"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="absolute top-0 right-[20%] w-2 h-2 rounded-full bg-accent/40" />
-              <div className="absolute bottom-[10%] left-[10%] w-1.5 h-1.5 rounded-full bg-white/25" />
-            </motion.div>
-
-            {/* Pulsing concentric rings */}
-            <motion.div
-              className="absolute inset-0 m-auto w-[75%] h-[75%] rounded-full border border-white/10"
-              animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.3, 0.15] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div
-              className="absolute inset-0 m-auto w-[90%] h-[90%] rounded-full border border-white/5"
-              animate={{ scale: [1, 1.08, 1], opacity: [0.1, 0.2, 0.1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            />
-
-            {/* Animated dashed orbit ring */}
-            <motion.svg
-              className="absolute inset-0 m-auto w-[88%] h-[88%] hidden md:block"
-              viewBox="0 0 200 200"
-              fill="none"
-            >
-              <motion.circle
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="white"
-                strokeWidth="0.8"
-                strokeDasharray="8 6"
-                opacity="0.15"
-                animate={{ strokeDashoffset: [0, -56] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              />
-            </motion.svg>
-
-            {/* Glow behind product */}
-            <motion.div
-              className="absolute inset-0 m-auto w-[60%] h-[60%] rounded-full bg-secondary/10 blur-3xl"
-              animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Floating + zoom product image */}
-            <motion.div
-              className="relative w-full max-w-[420px] mx-auto z-10"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <motion.div
-                animate={{
-                  y: [0, -14, 0],
-                  scale: [1, 1.04, 1],
-                  rotate: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <div className="relative aspect-square">
-                  <Image
-                    src="/images/product.png"
-                    alt="First-Giwa premium feed product"
-                    fill
-                    priority
-                    className="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.3)]"
-                    sizes="(max-width: 768px) 90vw, 420px"
-                  />
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Sparkle/shine effects */}
-            {[
-              { top: "15%", right: "20%", delay: 0 },
-              { top: "70%", right: "15%", delay: 1.5 },
-              { top: "25%", left: "18%", delay: 3 },
-              { top: "60%", left: "12%", delay: 2 },
-            ].map((pos, i) => (
-              <motion.svg
-                key={i}
-                className="absolute w-4 h-4 hidden md:block"
-                style={pos}
-                viewBox="0 0 16 16"
-                fill="white"
-                animate={{
-                  opacity: [0, 0.7, 0],
-                  scale: [0.5, 1.2, 0.5],
-                }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  delay: pos.delay,
-                  ease: "easeInOut",
-                }}
-              >
-                <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z" />
-              </motion.svg>
-            ))}
-          </motion.div>
+          {/* Right: 3D Product showcase */}
+          <Product3D />
         </div>
       </Container>
     </section>

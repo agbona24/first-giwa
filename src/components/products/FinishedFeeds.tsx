@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Container from "@/components/layout/Container";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
-import StaggerChildren from "@/components/motion/StaggerChildren";
-import { fadeUpVariants } from "@/lib/animations";
 import Button from "@/components/ui/Button";
 
 const products = [
@@ -67,6 +65,157 @@ const tabs = [
   { key: "fish", label: "Fish" },
 ] as const;
 
+function Premium3DProductCard({ product, index }: { product: typeof products[0]; index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [5, -5]), { stiffness: 100, damping: 15 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), { stiffness: 100, damping: 15 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    mouseX.set((e.clientX - centerX) / rect.width);
+    mouseY.set((e.clientY - centerY) / rect.height);
+  };
+
+  return (
+    <motion.div
+      className="perspective-1000"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      layout
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        mouseX.set(0);
+        mouseY.set(0);
+      }}
+    >
+      <motion.div
+        className="relative h-full"
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Card */}
+        <motion.div
+          className="relative h-full backdrop-blur-xl bg-white/80 rounded-3xl overflow-hidden border border-neutral-200/50 shadow-2xl"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Image/Icon section with gradient */}
+          <div className={`relative h-44 overflow-hidden ${
+            product.category === 'poultry' 
+              ? 'bg-gradient-to-br from-primary/20 to-accent/20' 
+              : 'bg-gradient-to-br from-blue-500/20 to-cyan-500/20'
+          }`}>
+            {/* Animated orbs */}
+            <motion.div
+              className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl ${
+                product.category === 'poultry' ? 'bg-primary/30' : 'bg-blue-500/30'
+              }`}
+              animate={isHovered ? { scale: [1, 1.3, 1], x: [0, 10, 0] } : {}}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            
+            <div className="relative z-10 h-full flex items-center justify-center">
+              <motion.div
+                className={`w-16 h-16 rounded-2xl ${
+                  product.category === 'poultry'
+                    ? 'bg-gradient-to-br from-primary to-primary-dark'
+                    : 'bg-gradient-to-br from-blue-500 to-cyan-600'
+                } p-0.5`}
+                animate={isHovered ? { rotate: [0, 5, -5, 0] } : {}}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="w-full h-full bg-white rounded-2xl flex items-center justify-center">
+                  <svg className={`w-8 h-8 ${
+                    product.category === 'poultry' ? 'text-primary' : 'text-blue-500'
+                  }`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                  </svg>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="relative z-10 p-6">
+            <motion.span 
+              className={`inline-block text-xs font-semibold uppercase tracking-wider mb-2 px-2.5 py-1 rounded-full ${
+                product.category === 'poultry'
+                  ? 'bg-primary/10 text-primary'
+                  : 'bg-blue-500/10 text-blue-600'
+              }`}
+            >
+              {product.category}
+            </motion.span>
+            
+            <h3 className="font-heading font-bold text-xl mb-3 text-text-dark">
+              {product.name}
+            </h3>
+            
+            <p className="text-text-muted text-sm leading-relaxed mb-4">
+              {product.description}
+            </p>
+            
+            {/* Size badges */}
+            <div className="flex flex-wrap gap-2 mb-5">
+              {product.sizes.map((size) => (
+                <motion.span
+                  key={size}
+                  className={`px-3 py-1 text-xs font-bold rounded-full ${
+                    product.category === 'poultry'
+                      ? 'bg-gradient-to-r from-primary to-primary-dark text-white'
+                      : 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white'
+                  }`}
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {size}
+                </motion.span>
+              ))}
+            </div>
+            
+            <Button href="/contact" variant="ghost" size="sm" className="w-full">
+              Inquire Now →
+            </Button>
+          </div>
+
+          {/* Shimmer effect */}
+          <motion.div
+            className="absolute inset-0 opacity-0"
+            animate={isHovered ? { 
+              opacity: [0, 0.2, 0],
+              x: ["-100%", "100%"]
+            } : {}}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            style={{
+              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)",
+            }}
+          />
+        </motion.div>
+
+        {/* Floating glow */}
+        <motion.div
+          className={`absolute -z-10 inset-0 rounded-3xl blur-2xl opacity-0 ${
+            product.category === 'poultry' ? 'bg-primary/30' : 'bg-blue-500/30'
+          }`}
+          animate={isHovered ? { opacity: 0.5 } : { opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function FinishedFeeds() {
   const [activeTab, setActiveTab] = useState<string>("all");
 
@@ -86,59 +235,27 @@ export default function FinishedFeeds() {
 
         <div className="flex gap-2 mb-10 justify-center flex-wrap">
           {tabs.map((tab) => (
-            <button
+            <motion.button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
+              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${
                 activeTab === tab.key
-                  ? "bg-primary text-white"
-                  : "bg-background-alt text-text-muted hover:text-primary"
+                  ? "bg-gradient-to-r from-primary to-primary-dark text-white shadow-lg"
+                  : "backdrop-blur-xl bg-white/60 text-text-muted hover:text-primary hover:bg-white/80 border border-neutral-200/50"
               }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               {tab.label}
-            </button>
+            </motion.button>
           ))}
         </div>
 
-        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((product) => (
-            <motion.div
-              key={product.id}
-              variants={fadeUpVariants}
-              layout
-              className="bg-background rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300"
-              whileHover={{ y: -4 }}
-            >
-              <div className="h-40 bg-background-alt flex items-center justify-center">
-                <svg className="w-12 h-12 text-primary/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                </svg>
-              </div>
-              <div className="p-6">
-                <span className="inline-block text-xs font-medium uppercase tracking-wider text-accent mb-2">
-                  {product.category}
-                </span>
-                <h3 className="font-heading font-semibold text-lg mb-2">{product.name}</h3>
-                <p className="text-text-muted text-sm leading-relaxed mb-4 line-clamp-2">
-                  {product.description}
-                </p>
-                <div className="flex gap-2 mb-4">
-                  {product.sizes.map((size) => (
-                    <span
-                      key={size}
-                      className="px-2.5 py-0.5 text-xs font-medium bg-primary/10 text-primary rounded-full"
-                    >
-                      {size}
-                    </span>
-                  ))}
-                </div>
-                <Button href="/contact" variant="ghost" size="sm">
-                  Inquire Now
-                </Button>
-              </div>
-            </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.map((product, index) => (
+            <Premium3DProductCard key={product.id} product={product} index={index} />
           ))}
-        </StaggerChildren>
+        </div>
       </Container>
     </Section>
   );

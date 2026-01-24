@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 import Product3D from "./Product3D";
+import QuizModal from "@/components/quiz/QuizModal";
 
 export default function HeroSection() {
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* === RICH GRADIENT BACKGROUND === */}
@@ -214,7 +217,7 @@ export default function HeroSection() {
             </motion.span>
 
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-bold text-white leading-[1.1] mb-6"
+              className="text-[2.25rem] leading-tight sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-bold text-white md:leading-[1.1] mb-5 md:mb-6"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
@@ -223,7 +226,7 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              className="text-lg text-white/85 max-w-[520px] leading-relaxed mb-10"
+              className="text-base sm:text-lg text-white/85 max-w-[520px] leading-relaxed mb-8 md:mb-10"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -233,17 +236,45 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
-              <Button href="/products" variant="primary-inverted" size="lg">
-                Explore Our Products
-              </Button>
-              <Button href="/contact" variant="secondary" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
-                Contact Us
-              </Button>
+              <motion.div whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
+                <Button href="/products" variant="primary-inverted" size="lg" className="w-full sm:w-auto min-h-[52px]">
+                  Explore Our Products
+                </Button>
+              </motion.div>
+              <motion.div whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
+                <Button 
+                  onClick={() => setIsQuizOpen(true)} 
+                  variant="secondary" 
+                  size="lg" 
+                  className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary min-h-[52px]"
+                >
+                  Contact Us
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            {/* Scroll indicator for mobile */}
+            <motion.div
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 md:hidden"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.6 }}
+            >
+              <motion.div
+                className="flex flex-col items-center gap-2 text-white/60"
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <span className="text-xs font-medium uppercase tracking-wider">Scroll</span>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </motion.div>
             </motion.div>
           </div>
 
@@ -251,6 +282,9 @@ export default function HeroSection() {
           <Product3D />
         </div>
       </Container>
+
+      {/* Quiz Modal */}
+      <QuizModal isOpen={isQuizOpen} onClose={() => setIsQuizOpen(false)} />
     </section>
   );
 }

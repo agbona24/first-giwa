@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Container from "./Container";
 import { NAV_LINKS, COMPANY } from "@/lib/constants";
 
@@ -9,9 +10,15 @@ export default function Footer() {
       <Container className="py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           <div>
-            <h3 className="font-heading text-xl font-bold text-white mb-4">
-              {COMPANY.shortName}
-            </h3>
+            <div className="mb-4 brightness-0 invert">
+              <Image
+                src="/images/logo.svg"
+                alt={COMPANY.name}
+                width={160}
+                height={45}
+                className="h-9 w-auto"
+              />
+            </div>
             <p className="text-white/70 text-sm leading-relaxed">
               Nigeria&apos;s trusted supplier of premium animal feeds and raw
               feed ingredients for poultry farms, fish farms, and agribusinesses.

@@ -44,7 +44,7 @@ export default function Button({
   external = false,
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-colors duration-200 cursor-pointer font-body";
+    "inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 cursor-pointer font-body active:scale-95 touch-manipulation";
 
   const combinedStyles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
 
@@ -57,16 +57,23 @@ export default function Button({
           rel="noopener noreferrer"
           className={combinedStyles}
           whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileTap={{ scale: 0.96 }}
+          transition={{ duration: 0.15 }}
         >
           {children}
         </motion.a>
       );
     }
     return (
-      <Link href={href} className={combinedStyles}>
-        {children}
-      </Link>
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.96 }}
+        transition={{ duration: 0.15 }}
+      >
+        <Link href={href} className={combinedStyles}>
+          {children}
+        </Link>
+      </motion.div>
     );
   }
 
@@ -76,7 +83,8 @@ export default function Button({
       onClick={onClick}
       className={combinedStyles}
       whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ duration: 0.15 }}
     >
       {children}
     </motion.button>

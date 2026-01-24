@@ -4,6 +4,11 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFab from "@/components/ui/WhatsAppFab";
+import MobileActionBar from "@/components/layout/MobileActionBar";
+import FloatingActionButton from "@/components/layout/FloatingActionButton";
+import DesktopFloatingActions from "@/components/layout/DesktopFloatingActions";
+import LiveChatWidget from "@/components/chat/LiveChatWidget";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -55,10 +60,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${inter.variable}`}>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppFab />
+        <ThemeProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <MobileActionBar />
+          <FloatingActionButton />
+          <DesktopFloatingActions />
+          <LiveChatWidget />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -51,7 +51,7 @@ function AnimatedOrbs() {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-gradient-to-tl from-yellow-500/30 to-transparent blur-3xl"
+        className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-gradient-to-tl from-emerald-400/30 to-transparent blur-3xl"
         animate={{
           x: [0, -40, 0],
           y: [0, -30, 0],
@@ -60,7 +60,7 @@ function AnimatedOrbs() {
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-orange-500/10 via-transparent to-yellow-500/10 blur-3xl"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-green-500/10 via-transparent to-emerald-500/10 blur-3xl"
         animate={{
           rotate: [0, 360],
         }}
@@ -141,8 +141,8 @@ export default function HomeCTA() {
               rotateY,
               transformStyle: "preserve-3d",
               perspective: "1000px",
-              background: "linear-gradient(135deg, #C97435 0%, #E8924A 25%, #C97435 50%, #A85D28 75%, #C97435 100%)",
-              boxShadow: "0 25px 80px -20px rgba(201, 116, 53, 0.5), 0 10px 40px -10px rgba(0,0,0,0.3)",
+              background: "linear-gradient(135deg, #1F5E2E 0%, #2a7a3b 25%, #3E8E41 50%, #2a7a3b 75%, #1F5E2E 100%)",
+              boxShadow: "0 25px 80px -20px rgba(31, 94, 46, 0.5), 0 10px 40px -10px rgba(0,0,0,0.3)",
             }}
           >
             {/* Animated background elements */}
@@ -249,11 +249,11 @@ export default function HomeCTA() {
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Button 
-                    href="/contact" 
-                    variant="primary-inverted" 
+                  <Button
+                    href="/contact"
+                    variant="primary-inverted"
                     size="lg"
-                    className="shadow-xl shadow-black/20 hover:shadow-2xl hover:shadow-black/30 transition-shadow"
+                    className="shadow-xl shadow-white/20 hover:shadow-2xl hover:shadow-white/30 transition-shadow"
                   >
                     Request a Quote
                   </Button>
@@ -269,7 +269,7 @@ export default function HomeCTA() {
                     variant="whatsapp"
                     size="lg"
                     external
-                    className="shadow-xl shadow-green-900/30 hover:shadow-2xl hover:shadow-green-900/40 transition-shadow"
+                    className="shadow-xl shadow-emerald-400/30 hover:shadow-2xl hover:shadow-emerald-400/40 transition-shadow"
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />

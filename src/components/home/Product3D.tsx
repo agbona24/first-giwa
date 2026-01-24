@@ -42,7 +42,7 @@ export default function Product3D() {
 
   return (
     <motion.div
-      className="relative flex items-center justify-center min-h-[400px] md:min-h-[520px]"
+      className="relative flex items-center justify-center min-h-[500px] md:min-h-[650px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, delay: 0.2 }}
@@ -128,7 +128,7 @@ export default function Product3D() {
       {/* === 3D PRODUCT CONTAINER === */}
       <div
         ref={containerRef}
-        className="relative w-full max-w-[420px] mx-auto z-10 cursor-grab active:cursor-grabbing"
+        className="relative w-full max-w-[550px] mx-auto z-10 cursor-grab active:cursor-grabbing"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}

@@ -173,8 +173,9 @@ export default function ProductCategories() {
           description="Quality feed solutions for every stage of your livestock production."
         />
 
+        {/* Desktop: Grid layout */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10"
+          className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
@@ -287,6 +288,88 @@ export default function ProductCategories() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Mobile: Horizontal swipe carousel */}
+        <div className="md:hidden -mx-4 px-4 overflow-hidden">
+          <motion.div
+            className="flex gap-4 pb-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide touch-pan-x"
+            drag="x"
+            dragConstraints={{ left: -600, right: 0 }}
+            dragElastic={0.1}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ staggerChildren: 0.15 }}
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {categories.map((cat, index) => (
+              <motion.div
+                key={cat.title}
+                variants={fadeUpVariants}
+                className="flex-shrink-0 w-[85vw] snap-center"
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="relative h-full backdrop-blur-xl bg-white/80 rounded-3xl p-6 border border-white/60 overflow-hidden active:scale-[0.98] transition-transform touch-manipulation">
+                  {/* Glass reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent rounded-3xl" />
+                  
+                  {/* Animated gradient overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} rounded-3xl opacity-100`} />
+
+                  {/* Number watermark */}
+                  <span className="absolute top-2 right-4 text-6xl font-black font-heading text-primary/[0.05] select-none">
+                    {cat.num}
+                  </span>
+
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <div className="mb-5">
+                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cat.iconGradient} flex items-center justify-center text-white shadow-lg`}>
+                        {cat.icon}
+                      </div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-lg font-bold font-heading text-text mb-3">{cat.title}</h3>
+                    <div className={`h-0.5 w-16 bg-gradient-to-r ${cat.iconGradient} mb-4`} />
+
+                    {/* Description */}
+                    <p className="text-text-muted text-sm leading-relaxed mb-5">{cat.description}</p>
+
+                    {/* Link */}
+                    <Link
+                      href="/products"
+                      className="inline-flex items-center text-sm font-semibold gap-2"
+                    >
+                      <span className={`bg-gradient-to-r ${cat.iconGradient} bg-clip-text text-transparent`}>
+                        Learn More
+                      </span>
+                      <div className={`w-5 h-5 rounded-full bg-gradient-to-r ${cat.iconGradient} flex items-center justify-center`}>
+                        <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Scroll indicator dots */}
+          <div className="flex justify-center gap-2 mt-4">
+            {categories.map((_, index) => (
+              <div
+                key={index}
+                className="w-2 h-2 rounded-full bg-primary/20"
+              />
+            ))}
+          </div>
+        </div>
       </Container>
     </section>
   );

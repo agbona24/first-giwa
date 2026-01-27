@@ -29,11 +29,12 @@ export default function ContactPage() {
               <h2 className="font-heading text-2xl md:text-3xl font-bold mb-2 text-text-dark">Get in Touch</h2>
               <p className="text-text-muted mb-6">Prefer direct contact? Reach us through any of these channels.</p>
               <ContactInfo />
-              <LocationMap />
             </div>
           </div>
         </Container>
       </Section>
+
+      <LocationMap />
     </>
   );
 }

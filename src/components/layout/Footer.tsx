@@ -11,12 +11,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           <div>
             <div className="mb-4 brightness-0 invert">
-              <Image
-                src="/images/logo.svg"
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/logo_new.png?t=20260127"
                 alt={COMPANY.name}
-                width={160}
-                height={45}
-                className="h-9 w-auto"
+                style={{ height: '150px', width: '150' }}
               />
             </div>
             <p className="text-white/70 text-sm leading-relaxed">

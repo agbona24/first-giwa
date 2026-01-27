@@ -53,16 +53,13 @@ export default function HeaderClient() {
         />
 
         <Container>
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-28 md:h-36">
             <Link href="/" className="flex items-center gap-2 relative">
               <div className={`transition-all duration-300 ${showSolid ? "brightness-100" : "brightness-0 invert"}`}>
-                <Image
-                  src="/images/logo.svg"
+                <img
+                  src={`/images/logo_new.png?t=${Date.now()}`}
                   alt={COMPANY.name}
-                  width={180}
-                  height={50}
-                  priority
-                  className="h-8 md:h-10 w-auto"
+                  style={{ height: '150px', width: '150px' }}
                 />
               </div>
             </Link>

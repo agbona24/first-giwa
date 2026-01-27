@@ -41,12 +41,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             
             <div className="flex flex-col h-full p-6 relative z-10">
               <div className="flex justify-between items-center mb-10">
-                <Image
-                  src="/images/logo.svg"
+                <img
+                  src={`/images/logo_new.png?t=${Date.now()}`}
                   alt={COMPANY.name}
-                  width={140}
-                  height={40}
-                  className="h-8 w-auto"
+                  style={{ height: '150px', width: '150px' }}
                 />
                 <button
                   onClick={onClose}

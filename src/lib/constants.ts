@@ -9,8 +9,10 @@ export const NAV_LINKS = [
 export const COMPANY = {
   name: "First-Giwa Feeds & Agro Tech Ltd",
   shortName: "First-Giwa Feeds",
-  phone: "+234 XXX XXX XXXX",
-  whatsapp: "234XXXXXXXXXX",
+  phone: "0706 896 4154",
+  phone2: "0705 986 7340",
+  phone3: "0813 194 9352",
+  whatsapp: "2347068964154",
   email: "info@firstgiwa.com",
   address: "Giwa Feedmill bus-stop Ikangba, Along Agoro Road, Odogbolu, Ogun State",
   addressLabel: "Head Office",

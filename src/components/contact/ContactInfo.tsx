@@ -26,7 +26,7 @@ const info = [
       </svg>
     ),
     label: "Phone",
-    value: COMPANY.phone,
+    value: `${COMPANY.phone} • ${COMPANY.phone2} • ${COMPANY.phone3}`,
     gradient: "from-blue-500 to-cyan-600",
     bgGlow: "bg-blue-500/20",
   },
@@ -88,14 +88,12 @@ export default function ContactInfo() {
 
               {/* Icon container */}
               <motion.div
-                className={`relative shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${item.gradient} p-0.5`}
-                whileHover={{ rotate: [0, -5, 5, 0] }}
+                className={`relative shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg`}
+                whileHover={{ rotate: [0, -5, 5, 0], scale: 1.05 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="w-full h-full bg-white rounded-xl flex items-center justify-center">
-                  <div className={`bg-gradient-to-br ${item.gradient} bg-clip-text text-transparent`}>
-                    {item.icon}
-                  </div>
+                <div className="text-white">
+                  {item.icon}
                 </div>
 
                 {/* Pulsing ring */}

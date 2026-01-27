@@ -61,7 +61,7 @@ export default function DesktopFloatingActions() {
   return (
     <>
       {/* Action buttons */}
-      <div className="hidden md:block fixed bottom-8 left-8 z-50">
+      <div className="hidden md:block fixed bottom-8 right-8 z-50">
         <div className="flex flex-col gap-3">
           {actions.map((action, index) => (
             <motion.a
@@ -80,13 +80,13 @@ export default function DesktopFloatingActions() {
 
               {/* Tooltip */}
               <motion.span
-                className="absolute left-16 bg-text text-white px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none"
+                className="absolute right-16 bg-text text-white px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none"
                 initial={false}
                 transition={{ duration: 0.2 }}
               >
                 {action.label}
                 {/* Arrow */}
-                <span className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-text rotate-45" />
+                <span className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-text rotate-45" />
               </motion.span>
 
               {/* Pulse effect */}

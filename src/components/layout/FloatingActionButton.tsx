@@ -43,12 +43,12 @@ export default function FloatingActionButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 md:hidden">
+    <div className="fixed bottom-6 right-6 z-50 md:hidden">
       {/* Action items */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute bottom-20 left-0 flex flex-col gap-3"
+            className="absolute bottom-20 right-0 flex flex-col gap-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -68,10 +68,10 @@ export default function FloatingActionButton() {
                   className={`flex items-center gap-3 bg-gradient-to-r ${action.color} text-white px-4 py-3 rounded-full shadow-lg active:scale-95 transition-transform`}
                   whileTap={{ scale: 0.95 }}
                 >
+                  <span className="text-sm font-semibold whitespace-nowrap">{action.label}</span>
                   <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                     {action.icon}
                   </div>
-                  <span className="text-sm font-semibold whitespace-nowrap">{action.label}</span>
                 </motion.a>
               </motion.div>
             ))}

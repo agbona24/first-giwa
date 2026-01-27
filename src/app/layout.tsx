@@ -41,10 +41,28 @@ export const metadata: Metadata = {
     "feed supplier Ogun State",
     "First-Giwa Feeds",
   ],
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_NG",
     siteName: "First-Giwa Feeds & Agro Tech Ltd",
+    images: [
+      {
+        url: "/images/logo_new.png",
+        width: 1200,
+        height: 630,
+        alt: "First-Giwa Feeds & Agro Tech Ltd",
+      },
+    ],
   },
   robots: {
     index: true,

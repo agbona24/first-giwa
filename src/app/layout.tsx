@@ -68,6 +68,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  authors: [{ name: "Azeez Agbona - Harzotech" }],
+  creator: "Azeez Agbona - Harzotech",
+  other: {
+    "developed-by": "Azeez Agbona - Harzotech",
+  },
 };
 
 export default function RootLayout({
@@ -75,8 +80,44 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "First-Giwa Feeds & Agro Tech Ltd",
+    url: "https://firstgiwa.com",
+    telephone: ["+2347068964154", "+2347069716822", "+2347059867340", "+2348131949352"],
+    email: "info@firstgiwa.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Giwa Feedmill bus-stop Ikangba, Along Agoro Road",
+      addressLocality: "Odogbolu",
+      addressRegion: "Ogun State",
+      addressCountry: "NG",
+    },
+    openingHours: "Mo-Sa 08:00-18:00",
+    creator: {
+      "@type": "Person",
+      name: "Azeez Agbona",
+      affiliation: "Harzotech",
+      telephone: "+2347069716822",
+      sameAs: "https://wa.me/2347069716822?text=Hi%20Harzotech%2C%20I%20saw%20a%20project%20you%20did%20for%20First-Giwa%20Feeds.%20I%20will%20like%20to%20discuss%20a%20project.",
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+2347069716822",
+        contactType: "technical support",
+        availableLanguage: "English",
+      },
+    },
+  };
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${poppins.variable} ${inter.variable}`}>
         <ThemeProvider>
           <Header />

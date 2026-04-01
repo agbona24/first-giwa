@@ -6,6 +6,7 @@ import { COMPANY } from "@/lib/constants";
 
 export default function DesktopFloatingActions() {
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,48 +61,82 @@ export default function DesktopFloatingActions() {
 
   return (
     <>
-      {/* Action buttons */}
+      {/* Collapsible Action buttons */}
       <div className="hidden md:block fixed bottom-8 right-8 z-50">
-        <div className="flex flex-col gap-3">
-          {actions.map((action, index) => (
-            <motion.a
-              key={action.label}
-              href={action.href}
-              target={action.external ? "_blank" : undefined}
-              rel={action.external ? "noopener noreferrer" : undefined}
-              className={`group relative w-14 h-14 ${action.color} ${action.hoverColor} rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.4 }}
-              whileHover={{ scale: 1.1, x: -4 }}
-              whileTap={{ scale: 0.95 }}
+        {/* Action items */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="absolute bottom-20 right-0 flex flex-col gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             >
-              {action.icon}
+              {actions.map((action, index) => (
+                <motion.a
+                  key={action.label}
+                  href={action.href}
+                  target={action.external ? "_blank" : undefined}
+                  rel={action.external ? "noopener noreferrer" : undefined}
+                  className={`group relative w-14 h-14 ${action.color} ${action.hoverColor} rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300`}
+                  initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 20, scale: 0.8 }}
+                  transition={{ delay: index * 0.05 }}
+                  whileHover={{ scale: 1.1, x: -4 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {action.icon}
 
-              {/* Tooltip */}
-              <motion.span
-                className="absolute right-16 bg-text text-white px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none"
-                initial={false}
-                transition={{ duration: 0.2 }}
-              >
-                {action.label}
-                {/* Arrow */}
-                <span className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-text rotate-45" />
-              </motion.span>
+                  {/* Tooltip */}
+                  <motion.span
+                    className="absolute right-16 bg-text text-white px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none"
+                    initial={false}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {action.label}
+                    {/* Arrow */}
+                    <span className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-text rotate-45" />
+                  </motion.span>
+                </motion.a>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-              {/* Pulse effect */}
-              <span className="absolute inset-0 rounded-full border-2 border-current animate-ping opacity-20" />
-            </motion.a>
-          ))}
-        </div>
+        {/* Main FAB button */}
+        <motion.button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-dark text-white shadow-2xl flex items-center justify-center"
+          whileTap={{ scale: 0.9 }}
+          animate={{ rotate: isOpen ? 45 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </motion.button>
+
+        {/* Backdrop */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm -z-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+            />
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Back to top button - positioned separately on the far right */}
+      {/* Back to top button - positioned separately on the left */}
       <AnimatePresence>
         {showBackToTop && (
           <motion.button
             onClick={scrollToTop}
-            className="hidden md:flex fixed bottom-8 left-28 z-50 w-14 h-14 bg-gradient-to-br from-accent to-orange-600 hover:from-orange-600 hover:to-accent rounded-full items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 group"
+            className="hidden md:flex fixed bottom-8 left-8 z-50 w-14 h-14 bg-gradient-to-br from-accent to-orange-600 hover:from-orange-600 hover:to-accent rounded-full items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 group"
             initial={{ opacity: 0, scale: 0.5, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.5, y: 20 }}

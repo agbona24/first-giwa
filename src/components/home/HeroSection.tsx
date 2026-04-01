@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
@@ -11,15 +12,27 @@ export default function HeroSection() {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* === RICH GRADIENT BACKGROUND === */}
+      {/* === BACKGROUND IMAGE === */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero.png"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+          quality={85}
+        />
+      </div>
+
+      {/* === RICH GRADIENT OVERLAY (fades the image with a deep green tint) === */}
       <div
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(ellipse 80% 60% at 20% 50%, #1a5c2a 0%, transparent 60%),
-            radial-gradient(ellipse 60% 80% at 80% 20%, #235a35 0%, transparent 50%),
-            radial-gradient(ellipse 70% 60% at 70% 80%, #143d1e 0%, transparent 50%),
-            linear-gradient(160deg, #0f3318 0%, #1a5428 30%, #1F5E2E 50%, #174a24 75%, #0d2c15 100%)
+            radial-gradient(ellipse 80% 60% at 20% 50%, rgba(26, 92, 42, 0.72) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 80% at 80% 20%, rgba(35, 90, 53, 0.60) 0%, transparent 50%),
+            radial-gradient(ellipse 70% 60% at 70% 80%, rgba(20, 61, 30, 0.65) 0%, transparent 50%),
+            linear-gradient(160deg, rgba(15, 51, 24, 0.88) 0%, rgba(26, 84, 40, 0.80) 30%, rgba(31, 94, 46, 0.72) 50%, rgba(23, 74, 36, 0.80) 75%, rgba(13, 44, 21, 0.90) 100%)
           `,
         }}
       />

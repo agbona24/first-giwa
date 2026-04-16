@@ -128,7 +128,7 @@ export default function ContactForm() {
               name="phone"
               type="tel"
               className="w-full px-4 py-3.5 rounded-xl border-2 border-neutral-200 bg-white text-text text-sm focus:outline-none focus:border-primary transition-all"
-              placeholder="0706 896 4154"
+              placeholder="+234706 896 4154"
               onFocus={() => setFocusedField("phone")}
               onBlur={() => setFocusedField(null)}
               whileFocus={{ scale: 1.01 }}

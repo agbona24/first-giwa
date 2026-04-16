@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import ProductHero from "@/components/products/ProductHero";
 import FinishedFeeds from "@/components/products/FinishedFeeds";
 import RawIngredients from "@/components/products/RawIngredients";

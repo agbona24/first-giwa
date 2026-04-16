@@ -412,7 +412,7 @@ export default function ProductCatalog() {
 
   return (
     <>
-      <Section background="default">
+      <Section background="default" id="catalog">
         <div className={cart.length > 0 ? "pb-24" : ""}>
           <Container>
             <SectionHeading

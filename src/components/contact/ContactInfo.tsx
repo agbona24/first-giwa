@@ -26,7 +26,7 @@ const info = [
       </svg>
     ),
     label: "Phone",
-    value: `${COMPANY.phone} • ${COMPANY.phone2} • ${COMPANY.phone3} • ${COMPANY.phone4}`,
+    value: `${COMPANY.phone} • ${COMPANY.phone2} • ${COMPANY.phone3}`,
     gradient: "from-blue-500 to-cyan-600",
     bgGlow: "bg-blue-500/20",
   },

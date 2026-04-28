@@ -86,7 +86,7 @@ export default function RootLayout({
     "@type": "LocalBusiness",
     name: "First-Giwa Feeds & Agro Tech Ltd",
     url: "https://firstgiwa.com",
-    telephone: ["+2347068964154", "+2347069716822", "+2347059867340", "+2348131949352"],
+    telephone: ["+2348101632636", "+2347059867340", "+2348131949352"],
     email: "info@firstgiwa.com",
     address: {
       "@type": "PostalAddress",
@@ -100,11 +100,11 @@ export default function RootLayout({
       "@type": "Person",
       name: "Azeez Agbona",
       affiliation: "Harzotech",
-      telephone: "+2347069716822",
-      sameAs: "https://wa.me/2347069716822?text=Hi%20Harzotech%2C%20I%20saw%20a%20project%20you%20did%20for%20First-Giwa%20Feeds.%20I%20will%20like%20to%20discuss%20a%20project.",
+      telephone: "+2348101632636",
+      sameAs: "https://wa.me/2348101632636?text=Hi%20Harzotech%2C%20I%20saw%20a%20project%20you%20did%20for%20First-Giwa%20Feeds.%20I%20will%20like%20to%20discuss%20a%20project.",
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+2347069716822",
+        telephone: "+2348101632636",
         contactType: "technical support",
         availableLanguage: "English",
       },

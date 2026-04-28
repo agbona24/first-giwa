@@ -316,7 +316,7 @@ Visit our website or contact us to learn more!
 
 Since 2015, we've been providing premium animal feeds and agro solutions across Ogun State. Our commitment to quality, innovation, and customer service has made us a trusted partner for farmers of all scales.
 
-**Contact**: +234706 896 4154 | +234705 986 7340 | info@firstgiwa.com  
+**Contact**: +2348101632636 | +234705 986 7340 | info@firstgiwa.com  
 **Visit**: Giwa Feedmill bus-stop Ikangba, Along Agoro Road, Odogbolu, Ogun State
     `,
     category: "Company News",

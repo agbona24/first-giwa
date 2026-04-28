@@ -1,181 +1,160 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Container from "@/components/layout/Container";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 const categories = [
   {
-    key: "protein",
-    label: "Protein Sources",
-    icon: "🥩",
+    name: "Protein Meals",
+    description: "High-quality protein sources for feed formulation including soybean meal, groundnut cake, and fish meal.",
+    icon: (
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+      </svg>
+    ),
     gradient: "from-emerald-500 to-green-600",
-    lightBg: "bg-emerald-50",
-    chipBg: "bg-emerald-500/10 text-emerald-800 border-emerald-400/25",
-    description: "High-quality protein meals for muscle growth and feed formulation.",
-    ingredients: [
-      "Bone meal", "Feather meal", "Fishmeal 60%", "GNC", "GNC Kano",
-      "Imported Bloodmeal", "Local bloodmeal", "Meat meal 55%",
-      "PKC", "Poultry meal 65%", "Soya meal",
-    ],
+    bgGlow: "bg-emerald-500/20",
   },
   {
-    key: "energy",
-    label: "Energy Sources",
-    icon: "⚡",
+    name: "Energy Sources",
+    description: "Carbohydrate and fat-rich ingredients for energy density including maize, wheat offal, and palm kernel cake.",
+    icon: (
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+      </svg>
+    ),
     gradient: "from-amber-500 to-orange-600",
-    lightBg: "bg-amber-50",
-    chipBg: "bg-amber-500/10 text-amber-800 border-amber-400/25",
-    description: "Carbohydrate and fat-rich ingredients for energy density in formulations.",
-    ingredients: [
-      "Cassava flour", "Cassava peel", "COCO POPS", "COCOSHELL",
-      "Garri", "Palamu", "Rice bran", "SORGHUM",
-      "Soya oil", "Wheat flour", "Wheat offal",
-    ],
+    bgGlow: "bg-amber-500/20",
   },
   {
-    key: "premix",
-    label: "Premixes & Additives",
-    icon: "🧪",
+    name: "Premixes & Additives",
+    description: "Vitamin-mineral premixes, amino acids, enzymes, and other feed additives for complete formulations.",
+    icon: (
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+      </svg>
+    ),
     gradient: "from-purple-500 to-pink-600",
-    lightBg: "bg-purple-50",
-    chipBg: "bg-purple-500/10 text-purple-800 border-purple-400/25",
-    description: "Vitamins, minerals, enzymes and speciality additives for complete nutrition.",
-    ingredients: [
-      "Bio-vit", "Champremix", "Concentrate premix", "CRUSHING",
-      "Enzymes", "Fish Prem", "KOKO", "Lysine",
-      "Salt", "Toxin binder", "Venor", "Vitamin C Cups", "Vitranor",
-    ],
+    bgGlow: "bg-purple-500/20",
   },
 ];
 
 export default function RawIngredients() {
-  const [active, setActive] = useState(categories[0].key);
-  const cat = categories.find((c) => c.key === active)!;
-
   return (
     <Section background="alt">
       <Container>
         <SectionHeading
           eyebrow="Bulk Supply"
           heading="Raw Feed Ingredients"
-          description="We supply feed millers and formulators with quality raw materials in bulk quantities."
+          description="We supply feed millers and formulators with quality raw materials in bulk."
         />
 
-        {/* Category selector */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-10 max-w-2xl mx-auto">
-          {categories.map((c) => (
-            <motion.button
-              key={c.key}
-              onClick={() => setActive(c.key)}
-              className={`flex-1 flex items-center justify-center gap-2.5 py-3.5 px-5 rounded-2xl text-sm font-semibold border-2 transition-all duration-200 cursor-pointer ${
-                active === c.key
-                  ? "border-transparent text-white shadow-xl"
-                  : "border-neutral-200 bg-white text-text-muted hover:border-neutral-300 hover:text-text"
-              }`}
-              style={active === c.key ? { background: `linear-gradient(135deg, var(--tw-gradient-stops))` } : {}}
-              whileTap={{ scale: 0.97 }}
-            >
-              {active === c.key && (
-                <motion.span
-                  layoutId="cat-bg"
-                  className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${c.gradient}`}
-                  style={{ position: "absolute" }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        <div className="space-y-6 max-w-4xl mx-auto">
+          {categories.map((cat, index) => {
+            const [isHovered, setIsHovered] = useState(false);
+            
+            return (
+              <motion.div
+                key={cat.name}
+                className="group relative"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                {/* Card */}
+                <motion.div
+                  className="relative flex items-start gap-6 backdrop-blur-xl bg-white/80 rounded-3xl p-6 md:p-8 border border-neutral-200/50 shadow-xl overflow-hidden"
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Glow effect */}
+                  <motion.div
+                    className={`absolute inset-0 ${cat.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                  />
+
+                  {/* Icon container */}
+                  <motion.div
+                    className={`relative shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${cat.gradient} p-0.5`}
+                    whileHover={{ rotate: [0, -5, 5, -5, 0] }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="w-full h-full bg-white rounded-2xl flex items-center justify-center">
+                      <div className={`bg-gradient-to-br ${cat.gradient} bg-clip-text text-transparent`}>
+                        {cat.icon}
+                      </div>
+                    </div>
+
+                    {/* Pulsing ring */}
+                    <motion.div
+                      className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${cat.gradient} opacity-30`}
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.3, 0, 0.3],
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  </motion.div>
+
+                  {/* Content */}
+                  <div className="relative z-10 flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="font-heading font-bold text-xl md:text-2xl text-text-dark">
+                        {cat.name}
+                      </h3>
+                      <motion.span 
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-secondary/10 text-secondary"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+                        Available
+                      </motion.span>
+                    </div>
+                    <p className="text-text-muted leading-relaxed">
+                      {cat.description}
+                    </p>
+                  </div>
+
+                  {/* Shimmer effect */}
+                  <motion.div
+                    className="absolute inset-0 opacity-0"
+                    animate={isHovered ? { 
+                      opacity: [0, 0.2, 0],
+                      x: ["-100%", "100%"]
+                    } : {}}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    style={{
+                      background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)",
+                    }}
+                  />
+                </motion.div>
+
+                {/* Floating glow behind card */}
+                <motion.div
+                  className={`absolute -z-10 inset-0 rounded-3xl blur-2xl opacity-0 ${cat.bgGlow}`}
+                  animate={isHovered ? { opacity: 0.4 } : { opacity: 0 }}
+                  transition={{ duration: 0.3 }}
                 />
-              )}
-              <span className="relative z-10 text-lg">{c.icon}</span>
-              <span className="relative z-10">{c.label}</span>
-            </motion.button>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* Panel */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-white rounded-3xl shadow-[var(--shadow-card)] border border-neutral-200/60 overflow-hidden"
-          >
-            {/* Panel header */}
-            <div className={`bg-gradient-to-br ${cat.gradient} px-8 py-6`}>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl">
-                  {cat.icon}
-                </div>
-                <div>
-                  <h3 className="font-heading font-bold text-white text-xl">{cat.label}</h3>
-                  <p className="text-white/75 text-sm mt-0.5">{cat.description}</p>
-                </div>
-                <div className="ml-auto hidden sm:flex items-center gap-1.5 bg-white/20 text-white text-sm font-bold px-3 py-1.5 rounded-full">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M3.375 7.5h17.25" />
-                  </svg>
-                  {cat.ingredients.length} items
-                </div>
-              </div>
-            </div>
-
-            {/* Ingredient chips */}
-            <div className="p-8">
-              <motion.div className="flex flex-wrap gap-3">
-                {cat.ingredients.map((name, i) => (
-                  <motion.span
-                    key={name}
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-sm font-medium cursor-default ${cat.chipBg}`}
-                    initial={{ opacity: 0, scale: 0.85 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.035, duration: 0.3 }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-current opacity-50" />
-                    {name}
-                  </motion.span>
-                ))}
-              </motion.div>
-
-              <p className="mt-8 text-sm text-text-muted border-t border-neutral-100 pt-6">
-                <span className="font-semibold text-primary">Minimum order quantities apply.</span>{" "}
-                <a href="/contact" className="text-primary hover:underline font-medium">Contact us</a>{" "}
-                for bulk pricing and availability.
-              </p>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Summary row */}
-        <motion.div
-          className="mt-8 grid grid-cols-3 gap-4"
+        <motion.p 
+          className="text-center text-text-muted text-sm mt-10 max-w-lg mx-auto backdrop-blur-sm bg-white/60 rounded-2xl p-4 border border-neutral-200/50"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.4 }}
         >
-          {categories.map((c) => (
-            <button
-              key={c.key}
-              onClick={() => setActive(c.key)}
-              className={`flex items-center gap-3 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
-                active === c.key
-                  ? "border-primary bg-primary/5"
-                  : "border-neutral-200 bg-white hover:border-neutral-300"
-              }`}
-            >
-              <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${c.gradient} flex items-center justify-center text-lg flex-shrink-0`}>
-                {c.icon}
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-bold text-text-dark truncate">{c.label}</p>
-                <p className="text-xs text-text-muted">{c.ingredients.length} items</p>
-              </div>
-            </button>
-          ))}
-        </motion.div>
+          <span className="font-semibold text-primary">Contact us</span> for specific ingredient availability and bulk pricing.
+          Minimum order quantities apply for raw materials.
+        </motion.p>
       </Container>
     </Section>
   );

@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { useRef, useState } from "react";
+import Image from "next/image";
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { fadeUpVariants } from "@/lib/animations";
@@ -167,6 +168,30 @@ export default function ProductCategories() {
       </div>
 
       <Container className="relative z-10">
+        {/* Product image showcase strip */}
+        <motion.div
+          className="flex justify-center mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.div
+            className="relative w-48 h-48 md:w-56 md:h-56"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="absolute inset-0 rounded-full bg-primary/10 blur-2xl scale-110" />
+            <Image
+              src="/images/product.png"
+              alt="First-Giwa premium animal feeds product range"
+              fill
+              className="object-contain drop-shadow-xl"
+              sizes="224px"
+            />
+          </motion.div>
+        </motion.div>
+
         <SectionHeading
           eyebrow="What We Offer"
           heading="Our Product Range"

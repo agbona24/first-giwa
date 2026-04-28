@@ -9,6 +9,7 @@ import FloatingActionButton from "@/components/layout/FloatingActionButton";
 import DesktopFloatingActions from "@/components/layout/DesktopFloatingActions";
 import LiveChatWidget from "@/components/chat/LiveChatWidget";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { CartProvider } from "@/contexts/CartContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -120,13 +121,15 @@ export default function RootLayout({
       </head>
       <body className={`${poppins.variable} ${inter.variable}`}>
         <ThemeProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <MobileActionBar />
-          <FloatingActionButton />
-          <DesktopFloatingActions />
-          <LiveChatWidget />
+          <CartProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <MobileActionBar />
+            <FloatingActionButton />
+            <DesktopFloatingActions />
+            <LiveChatWidget />
+          </CartProvider>
         </ThemeProvider>
       </body>
     </html>

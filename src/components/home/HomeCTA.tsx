@@ -1,36 +1,51 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
+import Image from "next/image";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 import FadeUp from "@/components/motion/FadeUp";
 import { COMPANY } from "@/lib/constants";
 
-// Animated floating particles
+const PARTICLES = [
+  { left: "8%", top: "15%", xEnd: 12, dur: 5.2, delay: 0 },
+  { left: "22%", top: "72%", xEnd: -18, dur: 6.1, delay: 0.8 },
+  { left: "38%", top: "28%", xEnd: 20, dur: 4.8, delay: 1.5 },
+  { left: "55%", top: "85%", xEnd: -10, dur: 7.0, delay: 0.3 },
+  { left: "67%", top: "18%", xEnd: 15, dur: 5.5, delay: 2.1 },
+  { left: "80%", top: "55%", xEnd: -22, dur: 6.4, delay: 0.6 },
+  { left: "12%", top: "45%", xEnd: 8, dur: 4.5, delay: 3.0 },
+  { left: "92%", top: "32%", xEnd: -15, dur: 5.9, delay: 1.2 },
+  { left: "47%", top: "60%", xEnd: 18, dur: 7.2, delay: 2.4 },
+  { left: "73%", top: "78%", xEnd: -20, dur: 4.3, delay: 0.9 },
+  { left: "30%", top: "10%", xEnd: 10, dur: 6.7, delay: 1.8 },
+  { left: "85%", top: "10%", xEnd: -12, dur: 5.1, delay: 3.5 },
+  { left: "5%", top: "88%", xEnd: 25, dur: 6.0, delay: 0.4 },
+  { left: "60%", top: "42%", xEnd: -8, dur: 4.9, delay: 2.7 },
+  { left: "95%", top: "68%", xEnd: 14, dur: 5.7, delay: 1.0 },
+  { left: "42%", top: "50%", xEnd: -16, dur: 7.5, delay: 0.7 },
+  { left: "18%", top: "92%", xEnd: 22, dur: 5.3, delay: 3.2 },
+  { left: "76%", top: "38%", xEnd: -9, dur: 6.8, delay: 1.6 },
+  { left: "50%", top: "5%", xEnd: 11, dur: 4.6, delay: 2.9 },
+  { left: "25%", top: "58%", xEnd: -17, dur: 5.8, delay: 0.2 },
+];
+
 function FloatingParticles() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(20)].map((_, i) => (
+      {PARTICLES.map((p, i) => (
         <motion.div
           key={i}
           className="absolute w-2 h-2 rounded-full bg-white/20"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
+          style={{ left: p.left, top: p.top }}
           animate={{
             y: [0, -100, 0],
-            x: [0, Math.random() * 50 - 25, 0],
+            x: [0, p.xEnd, 0],
             opacity: [0, 0.6, 0],
             scale: [0, 1, 0],
           }}
-          transition={{
-            duration: 4 + Math.random() * 4,
-            repeat: Infinity,
-            delay: Math.random() * 4,
-            ease: "easeInOut",
-          }}
+          transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
         />
       ))}
     </div>
@@ -149,6 +164,15 @@ export default function HomeCTA() {
             <AnimatedOrbs />
             <AnimatedGrid />
             <FloatingParticles />
+
+            {/* Floating product image — right side decoration */}
+            <motion.div
+              className="absolute right-6 bottom-0 w-48 h-48 md:w-64 md:h-64 opacity-20 md:opacity-30 pointer-events-none hidden sm:block"
+              animate={{ y: [0, -16, 0], rotate: [0, 3, -3, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Image src="/images/product.webp" alt="" fill className="object-contain" sizes="256px" />
+            </motion.div>
             
             {/* Glowing border effect */}
             <div className="absolute inset-[1px] rounded-[2.4rem] overflow-hidden">

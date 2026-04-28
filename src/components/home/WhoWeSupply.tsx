@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useRef } from "react";
+import Image from "next/image";
 import Container from "@/components/layout/Container";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -222,36 +223,43 @@ export default function WhoWeSupply() {
 
   return (
     <Section background="primary" className="py-20 md:py-28 overflow-hidden">
-      {/* Animated background */}
+      {/* Real factory background image */}
       <div className="absolute inset-0">
-        {/* Floating orbs */}
+        <Image
+          src="/images/factory4.jpeg"
+          alt=""
+          fill
+          className="object-cover object-center"
+          quality={80}
+        />
+      </div>
+
+      {/* Strong green overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `
+            linear-gradient(160deg, rgba(15, 51, 24, 0.93) 0%, rgba(26, 84, 40, 0.88) 40%, rgba(31, 94, 46, 0.85) 60%, rgba(13, 44, 21, 0.92) 100%)
+          `,
+        }}
+      />
+
+      {/* Floating orbs */}
+      <div className="absolute inset-0 pointer-events-none">
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white/5 blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.2, 1],
-          }}
+          animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.2, 1] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-secondary/10 blur-3xl"
-          animate={{
-            x: [0, -40, 0],
-            y: [0, 40, 0],
-            scale: [1.2, 1, 1.2],
-          }}
+          animate={{ x: [0, -40, 0], y: [0, 40, 0], scale: [1.2, 1, 1.2] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
-        
-        {/* Grid pattern */}
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: `linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)`,
           backgroundSize: "50px 50px",
         }} />
-
-        {/* Radial gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/50 to-primary" />
       </div>
 
       <Container className="relative z-10">

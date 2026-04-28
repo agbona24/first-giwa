@@ -169,7 +169,7 @@ export default function Product3D() {
             {/* Main product image */}
             <div className="relative aspect-square">
               <Image
-                src="/images/product.png"
+                src="/images/product.webp"
                 alt="First-Giwa premium feed product"
                 fill
                 priority
@@ -244,7 +244,7 @@ export default function Product3D() {
             >
               <div className="relative w-full h-full">
                 <Image
-                  src="/images/product.png"
+                  src="/images/product.webp"
                   alt=""
                   fill
                   className="object-contain blur-[1px]"

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { NAV_LINKS, COMPANY } from "@/lib/constants";
 import Button from "@/components/ui/Button";
+import { useCart } from "@/contexts/CartContext";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
+  const { cart } = useCart();
 
   return (
     <AnimatePresence>
@@ -89,6 +91,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                           whileTap={{ scale: 0.98 }}
                         >
                           {link.label}
+
+                          {/* Cart badge on Products link */}
+                          {link.href === "/products" && cart.length > 0 && (
+                            <span className="absolute right-4 top-1/2 -translate-y-1/2 min-w-[20px] h-5 flex items-center justify-center bg-[#25D366] text-white text-[11px] font-bold rounded-full px-1.5 z-10">
+                              {cart.length}
+                            </span>
+                          )}
                           
                           {/* Active indicator */}
                           {isActive && (

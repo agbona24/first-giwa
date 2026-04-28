@@ -51,9 +51,10 @@ export default function QuizTrigger({ variant = "floating", label = "Find Your F
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Floating Button — left side, below WhatsApp */}
       <motion.div
-        className="fixed bottom-6 right-6 z-40"
+        className="fixed left-4 z-40"
+        style={{ top: "calc(50% + 16px)" }}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1, type: "spring", duration: 0.6 }}
@@ -62,7 +63,7 @@ export default function QuizTrigger({ variant = "floating", label = "Find Your F
           onClick={() => setIsOpen(true)}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="group relative flex items-center gap-3 pl-6 pr-5 py-4 rounded-full bg-gradient-to-r from-primary to-accent shadow-2xl hover:shadow-primary/50 transition-all duration-300 overflow-hidden"
+          className="group relative flex items-center gap-3 pl-4 pr-5 py-4 rounded-full bg-gradient-to-r from-primary to-accent shadow-2xl hover:shadow-primary/50 transition-all duration-300 overflow-hidden"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -111,18 +112,18 @@ export default function QuizTrigger({ variant = "floating", label = "Find Your F
           />
         </motion.button>
 
-        {/* Tooltip */}
+        {/* Tooltip — appears to the right */}
         <AnimatePresence>
           {!isHovered && (
             <motion.div
-              className="absolute bottom-full right-0 mb-3 px-4 py-2 rounded-xl bg-text-dark text-white text-sm font-medium whitespace-nowrap shadow-lg"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
+              className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-4 py-2 rounded-xl bg-text-dark text-white text-sm font-medium whitespace-nowrap shadow-lg"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
               transition={{ delay: 2 }}
             >
               Find your perfect feed! 🎯
-              <div className="absolute top-full right-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-text-dark" />
+              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-text-dark rotate-45" />
             </motion.div>
           )}
         </AnimatePresence>

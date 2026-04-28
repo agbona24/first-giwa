@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState } from "react";
+import Image from "next/image";
 import Container from "@/components/layout/Container";
 import Section from "@/components/layout/Section";
 
@@ -132,41 +133,30 @@ export default function CompanyBackground() {
                 transformStyle: "preserve-3d",
               }}
             >
-              {/* Glass card */}
-              <motion.div 
-                className="relative aspect-[4/3] rounded-3xl backdrop-blur-xl bg-white/60 border border-neutral-200/50 overflow-hidden shadow-2xl"
+              {/* Glass card with real factory image */}
+              <motion.div
+                className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-neutral-200/30"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-                
-                {/* Placeholder content */}
-                <div className="relative z-10 h-full flex flex-col items-center justify-center p-8">
-                  <motion.div
-                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary-dark p-0.5 mb-6"
-                    animate={isHovered ? { rotate: [0, 10, -10, 0] } : {}}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <div className="w-full h-full bg-white rounded-2xl flex items-center justify-center">
-                      <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
-                    </div>
-                  </motion.div>
-                  
-                  <p className="text-text-muted text-center font-medium">
-                    Our Odogbolu Facility
-                  </p>
-                  <p className="text-text-light text-sm mt-1">
-                    Modern warehouse & production
-                  </p>
+                <Image
+                  src="/images/factory2.jpeg"
+                  alt="First-Giwa Feeds factory facility in Odogbolu"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                {/* Subtle gradient overlay at bottom for label */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <p className="text-white font-semibold text-sm">Our Odogbolu Facility</p>
+                  <p className="text-white/70 text-xs">Modern warehouse & production</p>
                 </div>
 
                 {/* Shimmer effect */}
                 <motion.div
                   className="absolute inset-0 opacity-0"
-                  animate={isHovered ? { 
+                  animate={isHovered ? {
                     opacity: [0, 0.3, 0],
                     x: ["-100%", "100%"]
                   } : {}}
@@ -195,6 +185,47 @@ export default function CompanyBackground() {
             </motion.div>
           </motion.div>
         </div>
+
+        {/* Factory photo gallery */}
+        <motion.div
+          className="mt-14"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <p className="text-center text-sm font-semibold uppercase tracking-widest text-text-muted mb-6">
+            Inside Our Facility
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+            {[
+              { src: "/images/factory.jpeg", alt: "Factory exterior" },
+              { src: "/images/factory2.jpeg", alt: "Production area" },
+              { src: "/images/factory3.jpeg", alt: "Warehouse storage" },
+              { src: "/images/factory4.jpeg", alt: "Processing equipment" },
+              { src: "/images/factory5.jpeg", alt: "Feed production line" },
+            ].map((img, i) => (
+              <motion.div
+                key={img.src}
+                className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-md"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                whileHover={{ scale: 1.04 }}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 50vw, 20vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </Container>
     </Section>
   );
